@@ -1,5 +1,6 @@
 import { Navigate, Route, Routes } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
+import AdminRoute from '../components/AdminRoute'
 import DashboardLayout from '../components/DashboardLayout'
 import ProtectedRoute from '../components/ProtectedRoute'
 import Login from '../pages/Login'
@@ -33,7 +34,9 @@ export default function AppRoutes() {
         <Route element={<DashboardLayout />}>
           <Route path="/produtos" element={<Products />} />
           <Route path="/promocoes" element={<Promotions />} />
-          <Route path="/usuarios" element={<Users />} />
+          <Route element={<AdminRoute />}>
+            <Route path="/usuarios" element={<Users />} />
+          </Route>
         </Route>
       </Route>
 

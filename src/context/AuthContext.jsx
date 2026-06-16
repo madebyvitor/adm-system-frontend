@@ -66,6 +66,7 @@ export function AuthProvider({ children }) {
     () => ({
       user,
       isAuthenticated: Boolean(token),
+      isAdmin: user?.role === 'admin',
       signIn,
       signOut,
     }),

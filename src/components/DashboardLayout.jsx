@@ -6,11 +6,12 @@ import Button from './Button'
 const navItems = [
   { to: '/produtos', label: 'Produtos' },
   { to: '/promocoes', label: 'Promoções' },
-  { to: '/usuarios', label: 'Usuários' },
+  { to: '/usuarios', label: 'Usuários', adminOnly: true },
 ]
 
 function SidebarContent({ onNavigate }) {
-  const { user, signOut } = useAuth()
+  const { user, isAdmin, signOut } = useAuth()
+  const visibleNavItems = navItems.filter((item) => !item.adminOnly || isAdmin)
   const navigate = useNavigate()
 
   const handleSignOut = () => {
@@ -27,7 +28,7 @@ function SidebarContent({ onNavigate }) {
       </div>
 
       <nav className="flex-1 space-y-1 px-3 py-4">
-        {navItems.map((item) => (
+        {visibleNavItems.map((item) => (
           <NavLink
             key={item.to}
             to={item.to}
