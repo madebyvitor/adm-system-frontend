@@ -23,7 +23,7 @@ function ProductCard({ product, onEdit, onDelete }) {
     <article className="rounded-xl border border-border bg-surface p-4">
       <h3 className="font-semibold text-text">{product.name}</h3>
       <p className="mt-1 text-sm text-text-muted">
-        {priceFormatter.format(product.price)} · Estoque: {product.stockQuantity}
+        {priceFormatter.format(product.price)} · Estoque: {product.quantity}
       </p>
       <div className="mt-4 flex gap-2">
         <Button variant="ghost" className="flex-1" onClick={() => onEdit(product)}>
@@ -56,7 +56,7 @@ function ProductTable({ products, onEdit, onDelete }) {
               <td className="px-4 py-3 text-sm text-text">
                 {priceFormatter.format(product.price)}
               </td>
-              <td className="px-4 py-3 text-sm text-text">{product.stockQuantity}</td>
+              <td className="px-4 py-3 text-sm text-text">{product.quantity}</td>
               <td className="px-4 py-3">
                 <div className="flex justify-end gap-2">
                   <Button variant="ghost" className="!w-auto !min-h-9 px-3 py-2" onClick={() => onEdit(product)}>
@@ -105,11 +105,12 @@ export default function Products() {
 
     try {
       const data = await listProducts({ page: pageToLoad, limit: PAGE_LIMIT })
-      const items = data.items ?? []
+      const items = data.data ?? []
+      const meta = data.meta ?? {}
 
       setProducts((prev) => (append ? [...prev, ...items] : items))
       setPage(pageToLoad)
-      setHasMore(data.hasMore ?? false)
+      setHasMore(meta.page < meta.lastPage)
       setIsError(false)
     } catch {
       if (pageToLoad === 1 && !append) {
@@ -132,10 +133,11 @@ export default function Products() {
         const data = await listProducts({ page: 1, limit: PAGE_LIMIT })
         if (cancelled) return
 
-        const items = data.items ?? []
+        const items = data.data ?? []
+        const meta = data.meta ?? {}
         setProducts(items)
         setPage(1)
-        setHasMore(data.hasMore ?? false)
+        setHasMore(meta.page < meta.lastPage)
         setIsError(false)
       } catch {
         if (cancelled) return

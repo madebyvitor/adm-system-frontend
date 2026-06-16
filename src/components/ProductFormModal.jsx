@@ -3,7 +3,7 @@ import Modal from './Modal'
 import Button from './Button'
 import Input from './Input'
 
-const emptyForm = { name: '', price: '', stockQuantity: '' }
+const emptyForm = { name: '', price: '', quantity: '' }
 
 function getInitialForm(product) {
   if (!product) return emptyForm
@@ -11,7 +11,7 @@ function getInitialForm(product) {
   return {
     name: product.name ?? '',
     price: String(product.price ?? ''),
-    stockQuantity: String(product.stockQuantity ?? ''),
+    quantity: String(product.quantity ?? ''),
   }
 }
 
@@ -27,9 +27,9 @@ function validate(form) {
     errors.price = 'Informe um preço válido'
   }
 
-  const stockQuantity = Number(form.stockQuantity)
-  if (form.stockQuantity === '' || Number.isNaN(stockQuantity) || stockQuantity < 0 || !Number.isInteger(stockQuantity)) {
-    errors.stockQuantity = 'Informe uma quantidade válida'
+  const quantity = Number(form.quantity)
+  if (form.quantity === '' || Number.isNaN(quantity) || quantity < 0 || !Number.isInteger(quantity)) {
+    errors.quantity = 'Informe uma quantidade válida'
   }
 
   return errors
@@ -62,7 +62,7 @@ function ProductFormModalContent({ product, onClose, onSave }) {
       await onSave({
         name: form.name.trim(),
         price: Number(form.price),
-        stockQuantity: Number(form.stockQuantity),
+        quantity: Number(form.quantity),
       })
       onClose()
     } catch {
@@ -118,9 +118,9 @@ function ProductFormModalContent({ product, onClose, onSave }) {
           type="number"
           step="1"
           min="0"
-          value={form.stockQuantity}
-          onChange={handleChange('stockQuantity')}
-          error={errors.stockQuantity}
+          value={form.quantity}
+          onChange={handleChange('quantity')}
+          error={errors.quantity}
           placeholder="0"
           required
         />
