@@ -88,7 +88,7 @@ function UserFormModalContent({ user, onClose, onSave }) {
       await onSave(payload)
       onClose()
     } catch {
-      // Error handling is done by the parent via toast
+    
     } finally {
       setLoading(false)
     }

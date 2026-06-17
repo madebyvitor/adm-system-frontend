@@ -66,7 +66,7 @@ function ProductFormModalContent({ product, onClose, onSave }) {
       })
       onClose()
     } catch {
-      // Error handling is done by the parent via toast
+      
     } finally {
       setLoading(false)
     }

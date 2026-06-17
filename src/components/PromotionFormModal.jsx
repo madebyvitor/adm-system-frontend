@@ -158,7 +158,6 @@ function PromotionFormModalContent({ promotion, onClose, onSave }) {
       await onSave({ payload, productIds: selectedProductIds })
       onClose()
     } catch {
-      // Error handling is done by the parent via toast
     } finally {
       setLoading(false)
     }
